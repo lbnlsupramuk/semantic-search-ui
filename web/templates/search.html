@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Semantic Search Demonstration</title>
+  <link rel="stylesheet" href="/static/styles.css">
+  <link rel="icon" type="image/png" href="/static/img/jgi-icon.png">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a class="header-attribution" href="https://gold.jgi.doe.gov/" target="_blank" rel="noreferrer" aria-label="Visit the GOLD website">
+        <span>Powered by metadata from</span>
+        <img src="/static/img/gold-logo.png" alt="GOLD (Genomes OnLine Database)" class="header-gold-logo">
+      </a>
+      <div class="application-name">Semantic Search</div>
+    </div>
+    <div class="application-bar">
+      <div class="application-bar-inner">
+        <nav class="primary-nav" aria-label="Primary navigation">
+          <a href="/" aria-current="page">Search</a>
+          <a href="/docs">API Docs</a>
+          <a href="https://code.jgi.doe.gov/dsi/advanced-analysis/data-modeling/semantic-search.git" target="_blank" rel="noreferrer">Code<span class="visually-hidden"> (opens in a new tab)</span></a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content" class="page-shell">
+    <header class="page-header">
+      <p class="eyebrow">Semantic Search Demonstration</p>
+      <h1>Search biosample metadata</h1>
+      <p class="lede">
+        Enter a natural-language query to view the generated query plan,
+        ranked results, and execution diagnostics.
+      </p>
+      <p id="model-summary" class="model-summary">Loading model information...</p>
+    </header>
+
+    <section class="search-panel">
+      <img src="/static/img/jgi-helix-watermark.svg" alt="" class="search-panel-watermark" aria-hidden="true">
+      <form id="search-form">
+        <div class="query-label-row">
+          <label for="query">Natural-language query</label>
+          <button id="voice-button" class="voice-button" type="button" aria-pressed="false" title="Speak your query">
+            <span aria-hidden="true">🎙</span>
+            <span class="voice-button-label">Speak</span>
+          </button>
+        </div>
+        <textarea
+          id="query"
+          rows="3"
+          maxlength="10000"
+          required
+          placeholder="Find soil metagenomes collected between 2010 and 2014"
+        ></textarea>
+        <p id="voice-help" class="voice-help">Speak a query and it will be added to the text box for review.</p>
+
+        <div class="form-row">
+          <div>
+            <label for="limit">Results</label>
+            <select id="limit">
+              <option value="5">5</option>
+              <option value="10" selected>10</option>
+              <option value="20">20</option>
+              <option value="50">50</option>
+            </select>
+          </div>
+          <button id="search-button" type="submit">Search</button>
+        </div>
+      </form>
+
+      <div class="examples">
+        <span>Examples:</span>
+        {% for query in example_queries %}
+          <button class="example-query" type="button" data-query="{{ query }}">
+            {{ query }}
+          </button>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section id="status" class="status" aria-live="polite"></section>
+
+    <section id="summary" class="summary-grid hidden">
+      <article class="summary-card">
+        <span>Results</span>
+        <strong id="result-count">0</strong>
+      </article>
+      <article class="summary-card">
+        <span>Model</span>
+        <strong id="model-name">—</strong>
+      </article>
+      <article class="summary-card">
+        <span>Total time</span>
+        <strong id="total-time">—</strong>
+      </article>
+    </section>
+
+    <section id="results-section" class="hidden">
+      <h2 id="results-heading">Results</h2>
+      <div id="results" class="results-list"></div>
+    </section>
+
+    <section id="details-section" class="hidden">
+      <details>
+        <summary>Query interpretation</summary>
+        <pre id="query-plan"></pre>
+      </details>
+
+      <details>
+        <summary>Execution diagnostics</summary>
+        <pre id="diagnostics"></pre>
+      </details>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer-inner">
+      <div class="footer-content">
+        <nav class="footer-links" aria-label="Footer navigation">
+          <a href="https://gold.jgi.doe.gov/" target="_blank" rel="noreferrer">GOLD Home</a>
+          <a href="https://jgi.doe.gov/disclaimer/" target="_blank" rel="noreferrer">Disclaimer</a>
+          <a href="https://jgi.doe.gov/accessibility/" target="_blank" rel="noreferrer">Accessibility / Section 508</a>
+        </nav>
+        <p class="copyright">© 1997–2026 The Regents of the University of California</p>
+      </div>
+      <div class="footer-logos" aria-label="Berkeley Lab and U.S. Department of Energy Office of Science">
+        <a href="https://www.lbl.gov/" target="_blank" rel="noreferrer" aria-label="Berkeley Lab"><img src="/static/img/lbnl-jgi-logo.png" alt="Berkeley Lab" class="footer-lab-logo"></a>
+        <a href="https://www.energy.gov/science/office-science" target="_blank" rel="noreferrer" aria-label="U.S. Department of Energy Office of Science"><img src="/static/img/doe-office-of-science-logo.png" alt="U.S. Department of Energy Office of Science" class="footer-doe-logo"></a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/static/app.js" defer></script>
+</body>
+</html>
